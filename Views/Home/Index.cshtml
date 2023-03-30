@@ -1,0 +1,99 @@
+﻿@model IEnumerable<AzureBlobStorageApp.Dtos.BlobDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles {
+    <style>
+        .btn-warning {
+            padding-right: 19px;
+        }
+
+        .btn.btn-warning.btn-download {
+            background: rgb(34,170,195);
+            background: linear-gradient(0deg, rgba(34,170,195,1) 0%, rgba(81,253,45,1) 100%);
+            border-color: #00DBDE;
+            color: #ffffffed;
+        }
+
+        .btn.btn-warning.btn-download:hover {
+            background: rgb(34,130,195);
+            background: linear-gradient(0deg, rgba(34,170,165,1) 0%, rgba(81,253,15,1) 100%);
+            border-color: #00DBDE;
+            color: #ffffffed;
+        }
+
+        .btn.btn-warning.btn-upload {
+            background-color: #00DBDE;
+            background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+            border-color: #00DBDE;
+            color: #ffffffed;
+        }
+
+        .btn.btn-warning.btn-upload:hover {
+            background-color: #00DBDE;
+            background-image: linear-gradient(90deg, #00DBAE 0%, #FC00AF 100%);
+            border-color: #00DBAE;
+            color: #ffffffed;
+        }
+
+        a.btn.btn-delete {
+            background: rgb(36,0,21);
+            background: radial-gradient(circle, rgba(36,0,21,1) 0%, rgba(121,9,9,1) 35%, rgba(255,0,0,1) 100%);
+            border-color: #7c3b7c;
+            color: #ffffffed;
+        }
+    </style>
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <span class="d-block m-t-5">
+                    <a class="btn btn-warning btn-upload" asp-action="Upload">Upload</a>
+            </span>
+        </div>
+        <div class="card-body table-border-style">
+            <div class="table-responsive">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Uri)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ContentType)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model) {
+                            <tr>
+                                <td>
+                                    <img src=@($"https://nguyennguyenstorage.blob.core.windows.net/nguyencontainer/{item.Name}") width="200" height="250">
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ContentType)
+                            </td>
+                            <td>
+                                    <a class="btn btn-warning btn-download" asp-controller="Home" asp-action="Download" asp-route-name="@item.Name">Downnload</a>
+                                    
+                                    <a class="confirmDeletion btn btn-danger" asp-action="Delete" asp-route-name="@item.Name">Delete</a>                                
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
